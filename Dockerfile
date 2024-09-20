@@ -1,5 +1,5 @@
 # Dockerfile
-# R, Pandoc, Quarto, and key R packages
+# R/Python, Pandoc, Quarto, and key R packages
 
 FROM rocker/r-ver:4.4.1
 
@@ -9,8 +9,10 @@ ENV PANDOC_VERSION="3.1.11.1"
 ENV QUARTO_VERSION="1.5.56"
 
 RUN apt-get update && apt-get install -y \
-    perl-modules \
     libcurl4-openssl-dev \
+    perl-modules \
+    python3 \
+    pip \
     sudo
 
 RUN /rocker_scripts/install_pandoc.sh && /rocker_scripts/install_quarto.sh
@@ -22,9 +24,9 @@ RUN usermod -aG sudo ${DEFAULT_USER} && \
 
 USER $DEFAULT_USER
 
-RUN R -q -e "install.packages(c('pak', 'tinytex', 'renv', 'knitr', 'rmarkdown'), repos = c('https://cloud.r-project.org/', 'https://r-lib.r-universe.dev'));" \
-    && R -q -e "tinytex::install_tinytex(dir = '~/.local/bin/')"
+RUN pip3 install -U radian
 
-RUN rm -rf ~/bin
+RUN R -q -e "install.packages(c('pak', 'tinytex', 'renv', 'knitr', 'rmarkdown'), repos = c('https://cloud.r-project.org/', 'https://r-lib.r-universe.dev'));" \
+    && R -q -e "tinytex::install_tinytex(force = TRUE)"
 
 CMD ["bash"]
