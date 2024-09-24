@@ -29,6 +29,4 @@ RUN pip3 install -U radian
 RUN R -q -e "install.packages(c('pak', 'tinytex', 'renv', 'knitr', 'rmarkdown'), repos = c('https://cloud.r-project.org/', 'https://r-lib.r-universe.dev'));" \
     && R -q -e "tinytex::install_tinytex(force = TRUE)"
 
-RUN source ~/.profile
-
-CMD ["bash"]
+CMD ["bash", "-c", "source ~/profile && exec bash"]
