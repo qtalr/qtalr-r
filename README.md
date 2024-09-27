@@ -27,6 +27,9 @@ docker run -it -v /path/to/your/local/directory:/home/ruser francojc/qtalr-r:lat
 
 Alternatively, you can use Docker Desktop to run the image and connect it to a host directory.
 
+> [!NOTE]
+> I highly recommend installing packages with {pak} instead of the default `install.packages()` function. This will ensure that when packages are installed, any system dependencies are also installed.
+
 ## Extending images
 
 Other images that extend this image include:

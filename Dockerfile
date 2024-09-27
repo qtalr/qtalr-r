@@ -15,8 +15,7 @@ RUN apt-get update && apt-get install -y \
     pip \
     sudo \
     git \
-    curl \
-    rm -rf /var/lib/apt/lists/*
+    curl
 
 RUN /rocker_scripts/install_pandoc.sh && /rocker_scripts/install_quarto.sh
 
