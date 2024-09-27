@@ -13,7 +13,10 @@ RUN apt-get update && apt-get install -y \
     perl-modules \
     python3 \
     pip \
-    sudo
+    sudo \
+    git \
+    curl \
+    rm -rf /var/lib/apt/lists/*
 
 RUN /rocker_scripts/install_pandoc.sh && /rocker_scripts/install_quarto.sh
 
@@ -29,4 +32,4 @@ RUN pip3 install -U radian
 RUN R -q -e "install.packages(c('pak', 'tinytex', 'renv', 'knitr', 'rmarkdown'), repos = c('https://cloud.r-project.org/', 'https://r-lib.r-universe.dev'));" \
     && R -q -e "tinytex::install_tinytex(force = TRUE)"
 
-CMD ["bash", "-c", "source ~/profile && exec bash"]
+CMD ["bash", "-c", "source ~/.profile && exec bash"]
