@@ -20,7 +20,6 @@ RUN apt-get update && apt-get install -y \
 
 RUN /rocker_scripts/install_pandoc.sh
 RUN /rocker_scripts/install_quarto.sh
-
 RUN /rocker_scripts/default_user.sh $DEFAULT_USER
 
 RUN usermod -aG sudo ${DEFAULT_USER} && \
@@ -31,6 +30,10 @@ USER $DEFAULT_USER
 # Install radian and jupyter for R/ Python
 RUN pip3 install -U radian
 RUN pip3 install -U jupyter
+
+# Include .Rprofile with default CRAN mirror
+# and set renv to install using {pak}
+COPY .Rprofile /home/${DEFAULT_USER}/.Rprofile
 
 RUN R -q -e "install.packages(c('pak', 'tinytex', 'renv', 'knitr', 'rmarkdown'), repos = c('https://cloud.r-project.org/', 'https://r-lib.r-universe.dev'));" \
     && R -q -e "tinytex::install_tinytex(force = TRUE)"
