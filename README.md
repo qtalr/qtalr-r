@@ -4,10 +4,10 @@ This repo contains the Dockerfile for the base image to set up an environment to
 
 Properties:
 
-- Based on the rocker/r-ver:4.4.1 image
-- Installs Python3, radian, jupyter, Pandoc (3.1.11.1) and Quarto (1.5.56)
+- Based on the rocker/r-ver:4.4.2 image
+- Installs Python3, radian, jupyter, Pandoc (3.1.11.1) and Quarto (1.6.39)
 - Creates a non-root user `ruser` with passwordless `sudo` access
-- Installs R packages: {pak}, {renv}, {knitr}, {rmarkdown} and {tinytext}, as well as running the TinyTex installer adding the executables to `~/.local/bin/`
+- Installs R packages: {pak}, {renv}, {knitr}, {rmarkdown}, {languageserver}, and {tinytext}, as well as running the TinyTex installer adding the executables to `~/.local/bin/`
 
 ## Usage
 

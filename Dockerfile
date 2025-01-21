@@ -1,12 +1,12 @@
 # Dockerfile
 # R/Python, Pandoc, Quarto, and key R packages
 
-FROM rocker/r-ver:4.4.1
+FROM rocker/r-ver:4.4.2
 
 ENV DEFAULT_USER="ruser"
 ENV S6_VERSION="v2.1.0.2"
 ENV PANDOC_VERSION="3.1.11.1"
-ENV QUARTO_VERSION="1.5.56"
+ENV QUARTO_VERSION="1.6.39"
 
 RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
@@ -35,7 +35,7 @@ RUN pip3 install -U jupyter
 # and set renv to install using {pak}
 COPY .Rprofile /home/${DEFAULT_USER}/.Rprofile
 
-RUN R -q -e "install.packages(c('pak', 'tinytex', 'renv', 'knitr', 'rmarkdown'), repos = c('https://cloud.r-project.org/', 'https://r-lib.r-universe.dev'));" \
+RUN R -q -e "install.packages(c('pak', 'tinytex', 'renv', 'knitr', 'rmarkdown', 'languageserver'), repos = c('https://cloud.r-project.org/', 'https://r-lib.r-universe.dev'));" \
     && R -q -e "tinytex::install_tinytex(force = TRUE)"
 
 # Source ~/.profile and start bash
