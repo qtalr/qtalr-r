@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
     perl-modules \
     python3 \
-    pip \
+    pipx \
     sudo \
     openssh-client \
     git \
@@ -28,15 +28,17 @@ RUN usermod -aG sudo ${DEFAULT_USER} && \
 USER $DEFAULT_USER
 
 # Install radian and jupyter for R/ Python
-RUN pip3 install -U radian
-RUN pip3 install -U jupyter
+RUN pipx install radian
+RUN pipx install jupyter --include-deps
+
+RUN pipx ensurepath
 
 # Include .Rprofile with default CRAN mirror
 # and set renv to install using {pak}
 COPY .Rprofile /home/${DEFAULT_USER}/.Rprofile
 
-RUN R -q -e "install.packages(c('pak', 'tinytex', 'renv', 'knitr', 'rmarkdown', 'languageserver'), repos = c('https://cloud.r-project.org/', 'https://r-lib.r-universe.dev'));" \
+RUN R -q -e "install.packages(c('pak', 'tinytex', 'renv', 'knitr', 'rmarkdown'), repos = c('https://cloud.r-project.org/', 'https://r-lib.r-universe.dev'));" \
     && R -q -e "tinytex::install_tinytex(force = TRUE)"
 
 # Source ~/.profile and start bash
-CMD ["bash", "-c", "source ~/.profile && exec bash"]
+CMD ["bash", "-c", "exec bash"]
