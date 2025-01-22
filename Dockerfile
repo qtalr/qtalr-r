@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
     perl-modules \
     python3 \
+    python3-dev \
     pipx \
     sudo \
     openssh-client \
